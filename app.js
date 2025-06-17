@@ -2,6 +2,8 @@ const express = require('express');
 const app = express();
 const { engine } = require('express-handlebars');
 
+app.use(express.urlencoded({extended: true}));
+
 const mysql = require('mysql2');
 
 app.use('/bootstrap', express.static(__dirname + '/node_modules/bootstrap/dist'));
@@ -55,6 +57,20 @@ app.get('/produtos/add', (req, res) => {
   });
 });
 
+app.post('/produtos/add', (req, res) => {
+  const {nome, descricao, preco, estoque, categoria_id} = req.body;
+  const sql=`
+  INSERT INTO produtos (nome, descricao, preco, estoque, categoria_id)
+  VALUES (?,?,?,?,?)
+  `;
+  conexao.query(sql,[nome, descricao, preco, estoque, categoria_id], (erro,resultado) => {
+    if(erro){
+      console.error('Erro ao inserir produto:',erro);
+      return res.status(500).send('Erro ao adicionar produto');
+    }
+    res.redirect('/');
+  });
+});
 
 app.get('/clientes', (req, res) => {;
   let sql = 'SELECT * FROM clientes';
@@ -68,5 +84,35 @@ app.get('/clientes', (req, res) => {;
   });
 });
 
+app.get('/categorias', (req, res) => {;
+  let sql = 'SELECT * FROM categorias';
+  conexao.query(sql, function (erro, categorias_qs) {
+    if (erro) {
+      console.error('😫 Erro ao consultar categorias:', erro);
+      res.status(500).send('Erro ao consultar categorias');
+      return;
+    }
+    res.render('categorias', { categorias: categorias_qs });
+  });
+});
+
+app.get('/categorias/add', (req, res) => {
+  res.render('categoria_form');
+});
+
+app.post('/categorias/add', (req, res) => {
+  const {nome, descricao} = req.body;
+  const sql=`
+  INSERT INTO categorias (nome, descricao)
+  VALUES (?,?)
+  `;
+  conexao.query(sql,[nome, descricao], (erro,resultado) => {
+    if(erro){
+      console.error('Erro ao inserir categoria:',erro);
+      return res.status(500).send('Erro ao adicionar categoria');
+    }
+    res.redirect('/');
+  });
+});
 
 app.listen(8080);

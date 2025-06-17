@@ -25,10 +25,10 @@
 
     <div class="form-group">
       <label for="categoria_id">Categoria:</label>
-      <select class="form-control" name="categoria_id" required>
-        <option value="">Selecione uma categoria</option>
+      <select class="form-control" name="categoria_id">
+        <option value=0>Selecione uma categoria</option>
         {{#each categorias}}
-          <option value="{{this.id}}">{{this.nome}}</option>
+          <option value={{this.id}}>{{this.nome}}</option>
         {{/each}}
       </select>
     </div>

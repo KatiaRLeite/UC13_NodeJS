@@ -1,0 +1,29 @@
+<h1 class="text-center my-4">Categorias</h1>
+
+<div class="container">
+  <a href="/" class="btn btn-primary m-3" role="button">Home</a>
+  {{#if categorias.length}}
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped table-hover align-middle">
+        <thead class="table-primary text-center">
+          <tr>
+            <th>Nome</th>
+            <th>Descrição</th>
+          </tr>
+        </thead>  
+        <tbody>
+          {{#each categorias}}
+            <tr>
+              <td>{{this.nome}}</td>
+              <td>{{this.descricao}}</td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  {{else}}
+    <div class="alert alert-warning text-center" role="alert">
+      Sem categorias disponíveis no momento.
+    </div>
+  {{/if}}
+</div>
