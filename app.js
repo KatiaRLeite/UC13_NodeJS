@@ -57,6 +57,46 @@ app.get('/produtos/add', (req, res) => {
   });
 });
 
+app.get('/produto/:id', (req, res) => {
+  const id = req.params.id;
+
+  let sql = `SELECT produtos.*, categorias.nome as categoria_nome 
+              FROM produtos 
+              join categorias 
+              on produtos.categoria_id = categorias.id 
+              where produtos.id = ?`;
+  
+  conexao.query(sql,[id], function (erro, produto_qs) {
+    if (erro) {
+      console.error('😫 Erro ao consultar produtos:', erro);
+      res.status(500).send('Erro ao consultar produtos');
+      return;
+    }
+
+    res.render('produto', { produto: produto_qs[0] });
+  });
+});
+
+app.get('/produtos/categorias/:id', (req, res) => {
+  const id = req.params.id;
+
+  let sql = `SELECT produtos.*, categorias.nome as categoria_nome 
+              FROM produtos 
+              join categorias 
+              on produtos.categoria_id = categorias.id 
+              where categorias.id = ?`;
+  
+  conexao.query(sql,[id], function (erro, produto_qs) {
+    if (erro) {
+      console.error('😫 Erro ao consultar produtos:', erro);
+      res.status(500).send('Erro ao consultar produtos');
+      return;
+    }
+
+    res.render('index', { produto: produto_qs});
+  });
+});
+
 app.post('/produtos/add', (req, res) => {
   const {nome, descricao, preco, estoque, categoria_id} = req.body;
   const sql=`

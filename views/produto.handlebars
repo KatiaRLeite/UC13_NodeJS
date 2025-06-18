@@ -1,0 +1,14 @@
+<h1 class="text-center my-4">Detalhes Produto</h1>
+
+<div class="container" style="max-width: 80%;">
+  <button type="submit" class="btn btn-primary mt-3">Alterar Produto</button>
+  <button type="submit" class="btn btn-primary mt-3">Apagar Produto</button>
+
+  <div class="card h-100 bg-light border-primary">
+    <div><a href="/produtos/categorias/{{produto.categoria_id}}"><h6>{{produto.categoria_nome}}</h6></a></div>
+    <div><h5 class="card-title text-primary">{{produto.nome}}</h5></div>
+    <div><h6>{{produto.descricao}}</h6></div>
+    <div>{{produto.preco}}</div>
+    <div>{{produto.estoque}}</div>
+  </div>  
+</div>

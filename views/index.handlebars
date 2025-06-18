@@ -15,13 +15,13 @@
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
       {{#each produtos}}
         <div class="col">
-          <div class="card h-100 bg-light border-primary">
-            <div class="card-body">
-              <h5 class="card-title text-primary">{{this.nome}}</h5>
-              <h6 class="card-subtitle mb-2 text-muted">R$ {{this.preco}}</h6>
-              <p class="card-text">{{this.descricao}}</p>
+          <a href="/produto/{{this.id}}">
+            <div class="card h-100 bg-light border-primary">
+              <div class="card-body">
+                <h5 class="card-title text-primary"> {{this.nome}}</h5>
+              </div>
             </div>
-          </div>
+          </a>
         </div>
       {{/each}}
     </div>
