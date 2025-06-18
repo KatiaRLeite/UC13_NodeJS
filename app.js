@@ -79,21 +79,22 @@ app.get('/produto/:id', (req, res) => {
 
 app.get('/produtos/categorias/:id', (req, res) => {
   const id = req.params.id;
+  console.log(id);
 
   let sql = `SELECT produtos.*, categorias.nome as categoria_nome 
               FROM produtos 
               join categorias 
               on produtos.categoria_id = categorias.id 
-              where categorias.id = ?`;
+              where produtos.categoria_id = ?`;
   
-  conexao.query(sql,[id], function (erro, produto_qs) {
+  conexao.query(sql,[id], function (erro, produtos_qs) {
     if (erro) {
       console.error('😫 Erro ao consultar produtos:', erro);
       res.status(500).send('Erro ao consultar produtos');
       return;
     }
 
-    res.render('index', { produto: produto_qs});
+    res.render('index', { produtos: produtos_qs});
   });
 });
 
