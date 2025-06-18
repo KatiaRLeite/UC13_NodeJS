@@ -79,8 +79,7 @@ app.get('/produto/:id', (req, res) => {
 
 app.get('/produtos/categorias/:id', (req, res) => {
   const id = req.params.id;
-  console.log(id);
-
+  
   let sql = `SELECT produtos.*, categorias.nome as categoria_nome 
               FROM produtos 
               join categorias 
@@ -126,6 +125,20 @@ app.get('/clientes', (req, res) => {;
 });
 
 app.get('/categorias', (req, res) => {;
+  let sql = 'SELECT * FROM categorias';
+  conexao.query(sql, function (erro, categorias_qs) {
+    if (erro) {
+      console.error('😫 Erro ao consultar categorias:', erro);
+      res.status(500).send('Erro ao consultar categorias');
+      return;
+    }
+    res.render('categorias', { categorias: categorias_qs });
+  });
+});
+
+app.get('/categorias/upd/:id', (req, res) => {;
+  const id = req.params.id;
+
   let sql = 'SELECT * FROM categorias';
   conexao.query(sql, function (erro, categorias_qs) {
     if (erro) {
