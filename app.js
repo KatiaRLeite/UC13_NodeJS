@@ -57,7 +57,7 @@ app.get('/produtos/add', (req, res) => {
   });
 });
 
-app.get('/produto/:id', (req, res) => {
+app.get('/produto/:id/detalhes', (req, res) => {
   const id = req.params.id;
 
   let sql = `SELECT produtos.*, categorias.nome as categoria_nome 
@@ -70,6 +70,25 @@ app.get('/produto/:id', (req, res) => {
     if (erro) {
       console.error('😫 Erro ao consultar produtos:', erro);
       res.status(500).send('Erro ao consultar produtos');
+      return;
+    }
+
+    res.render('produto', { produto: produto_qs[0] });
+  });
+});
+
+
+app.get('/produto/:id/remover', (req, res) => {
+  const id = req.params.id;
+
+  const sql = `DELETE
+              FROM produtos 
+              where produtos.id = ?`;
+  
+  conexao.query(sql,[id], function (erro, resultado) {
+    if (erro) {
+      console.error('😫 Erro ao remover produto:', erro);
+      res.status(500).send('Erro ao remover produto');
       return;
     }
 
