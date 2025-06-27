@@ -28,7 +28,7 @@
     <div class="form-group">
       <label for="categoria_id">Categoria:</label>
       <select class="form-control" name="categoria_id">
-        <option value=0>Selecione uma categoria</option>
+        <option value="">Selecione uma categoria</option>
         {{#each categorias}}
           <option value="{{this.id}}" {{#ifCond this.id '==' ../produto.categoria_id}}selected{{/ifCond}}>
               {{this.nome}}

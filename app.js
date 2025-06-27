@@ -2,6 +2,8 @@ const express = require('express');
 const app = express();
 const { engine } = require('express-handlebars');
 
+app.engine('handlebars', engine());
+app.set('view engine', 'handlebars');
 app.engine('handlebars', engine({
   helpers: {
     ifCond: function (v1, operator, v2, options) {
@@ -22,6 +24,8 @@ app.engine('handlebars', engine({
     }
   }
 }));
+app.set('views', './views');
+
 
 app.use(express.urlencoded({extended: true}));
 
@@ -31,9 +35,7 @@ app.use('/bootstrap', express.static(__dirname + '/node_modules/bootstrap/dist')
 app.use('/bootstrap-icons', express.static(__dirname + '/node_modules/bootstrap-icons/font'));
 app.use('/static', express.static(__dirname + '/static'));
 
-app.engine('handlebars', engine());
-app.set('view engine', 'handlebars');
-app.set('views', './views');
+
 
 const conexao = mysql.createConnection({
   host: 'localhost',
@@ -117,7 +119,7 @@ app.get('/produto/:id/remover', (req, res) => {
   });
 });
 
-app.get('/produto/:id/editar', (req, res) => {
+app.post('/produto/:id/editar', (req, res) => {
   const id = req.params.id;
 
   const{nome, descricao, preco, estoque, categoria_id} = req.body;
