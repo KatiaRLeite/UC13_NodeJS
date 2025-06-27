@@ -1,26 +1,28 @@
-<h1 class="text-center my-4">Adicionar Produto</h1>
+<h1 class="text-center my-4">
+  {{#if produto}}Editar Produto{{else}}Adicionar Produto{{/if}}
+</h1>
 
 <div class="container" style="max-width: 80%;">
-  <form action="/produtos/add" method="POST" class="mb-3 mx-auto">
+  <form action="{{formAction}}" method="POST" class="mb-3 mx-auto">
 
     <div class="form-group">
       <label for="nome">Nome:</label>
-      <input type="text" class="form-control" name="nome" required>
+      <input type="text" class="form-control" name="nome" value="{{produto.nome}}" equired>
     </div>
 
     <div class="form-group">
       <label for="descricao">Descrição:</label>
-      <textarea class="form-control" name="descricao" rows="3"></textarea>
+      <textarea class="form-control" name="descricao" rows="3">{{produto.descricao}}</textarea>
     </div>
 
     <div class="form-group">
       <label for="preco">Preço:</label>
-      <input type="number" class="form-control" name="preco" step="0.01" required>
+      <input type="number" class="form-control" name="preco" step="0.01" value="{{produto.preco}}" required>
     </div>
 
     <div class="form-group">
       <label for="estoque">Estoque:</label>
-      <input type="number" class="form-control" name="estoque" required>
+      <input type="number" class="form-control" name="estoque" value="{{produto.estoque}}" required>
     </div>
 
     <div class="form-group">
@@ -28,7 +30,9 @@
       <select class="form-control" name="categoria_id">
         <option value=0>Selecione uma categoria</option>
         {{#each categorias}}
-          <option value={{this.id}}>{{this.nome}}</option>
+          <option value="{{this.id}}" {{#ifCond this.id '==' ../produto.categoria_id}}selected{{/ifCond}}>
+              {{this.nome}}
+          </option>
         {{/each}}
       </select>
     </div>
